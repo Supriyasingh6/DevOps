@@ -1,0 +1,43 @@
+public class Solution {
+
+	public static boolean ratInAMaze(int maze[][]) {
+    int n = maze.length;
+    boolean[][] visited = new boolean[n][n];
+    return exploreMaze(maze, 0, 0, visited);
+}
+
+private static boolean exploreMaze(int[][] maze, int row, int col, boolean[][] visited) {
+    int n = maze.length;
+    
+    // Check if current cell is valid and not visited before
+    if (row < 0 || row >= n || col < 0 || col >= n || maze[row][col] == 0 || visited[row][col]) {
+        return false;
+    }
+    
+    visited[row][col] = true;
+    
+    // Check if we have reached the destination cell
+    if (row == n - 1 && col == n - 1) {
+        return true;
+    }
+    
+    // Try exploring all possible directions
+    if (exploreMaze(maze, row - 1, col, visited)) {
+        return true;
+    }
+    if (exploreMaze(maze, row, col + 1, visited)) {
+        return true;
+    }
+    if (exploreMaze(maze, row + 1, col, visited)) {
+        return true;
+    }
+    if (exploreMaze(maze, row, col - 1, visited)) {
+        return true;
+    }
+    
+    // Backtrack and mark current cell as unvisited
+    visited[row][col] = false;
+    return false;
+}
+
+}
